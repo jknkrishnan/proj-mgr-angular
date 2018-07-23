@@ -1,3 +1,119 @@
-<p>
-  view-task works!
-</p>
+<div class="table-title">
+  <div class="row">
+    <div class="col-sm-1">
+      <h4>
+        <b>Project:</b>
+      </h4>
+    </div>
+    <div class="col-sm-5">
+      <div id="custom-search-input">
+        <div class="input-group col-md-12 search-box">
+          <input type="text" class="  search-query form-control" placeholder="Search" />
+          <span class="input-group-btn">
+            <button class="btn btn-primary btn-sm" type="button">Search</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-primary btn-sm">Completed</button>
+      <button type="button" class="btn btn-primary btn-sm">Priority</button>
+      <button type="button" class="btn btn-primary btn-sm">End Date</button>
+      <button type="button" class="btn btn-primary btn-sm">Start Date</button>
+      <h5>
+        <b>Sort Tasks By:</b>
+      </h5>
+    </div>
+  </div>
+</div>
+<div>
+  <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>
+          <span class="custom-checkbox">
+            <input type="checkbox" id="selectAll">
+            <label for="selectAll"></label>
+          </span>
+        </th>
+        <th>
+          <!-- <input type="text" class="form-control col-sm-2" placeholder="Task" disabled> -->
+          Task
+        </th>
+        <th>
+          <!-- <input type="text" class="form-control col-sm-2" placeholder="Parent" disabled> -->
+          Parent
+        </th>
+        <th>
+          <!-- <input type="text" class="form-control col-sm-2" placeholder="Priority" disabled> -->
+          Priority
+        </th>
+        <th>
+          <!-- <input type="text" class="form-control col-sm-2" placeholder="Start Date" disabled> -->
+          Start Date
+        </th>
+        <th>
+          <!-- <input type="text" class="form-control col-sm-2" placeholder="End Date" disabled> -->
+          End Date
+        </th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="custom-checkbox">
+            <input type="checkbox" id="checkbox1" name="options[]" value="1">
+            <label for="checkbox1"></label>
+          </span>
+        </td>
+        <td>abc</td>
+        <td>def</td>
+        <td>10</td>
+        <td>01/01/2018</td>
+        <td>01/01/2018</td>
+        <td>
+          <a href="#editEmployeeModal" class="edit" data-toggle="modal">
+            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+          </a>
+        </td>
+        <td>
+          <a href="#endEmployeeModal" class="end" data-toggle="modal">
+            <i class="material-icons" data-toggle="tooltip" title="End">&#xE872;</i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
+</div>
+<div class="clearfix">
+  <div class="hint-text">Showing
+    <b>1</b> out of
+    <b>10</b> entries</div>
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a href="#">Previous</a>
+    </li>
+    <li class="page-item active">
+      <a href="#" class="page-link">1</a>
+    </li>
+    <li class="page-item">
+      <a href="#" class="page-link">2</a>
+    </li>
+    <li class="page-item">
+      <a href="#" class="page-link">3</a>
+    </li>
+    <li class="page-item">
+      <a href="#" class="page-link">4</a>
+    </li>
+    <li class="page-item">
+      <a href="#" class="page-link">5</a>
+    </li>
+    <li class="page-item">
+      <a href="#" class="page-link">Next</a>
+    </li>
+  </ul>
+</div>

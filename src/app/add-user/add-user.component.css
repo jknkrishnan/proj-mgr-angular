@@ -1,32 +1,56 @@
-/* Modal styles */
-.modal .modal-dialog {
-    max-width: 400px;
-}
-.modal .modal-header, .modal .modal-body, .modal .modal-footer {
-    padding: 20px 30px;
-}
-.modal .modal-content {
-    border-radius: 3px;
-}
-.modal .modal-footer {
-    background: #ecf0f1;
-    border-radius: 0 0 3px 3px;
-}
-.modal .modal-title {
-    display: inline-block;
-}
-.modal .form-control {
+.btn {
+    color: #fff;
+    float: right;
+    font-size: 13px;
+    border: none;
+    min-width: 50px;
     border-radius: 2px;
-    box-shadow: none;
-    border-color: #dddddd;
+    border: none;
+    outline: none !important;
+    margin-left: 10px;
 }
-.modal textarea.form-control {
-    resize: vertical;
+.btn i {
+    float: left;
+    font-size: 21px;
+    margin-right: 5px;
 }
-.modal .btn {
-    border-radius: 2px;
-    min-width: 100px;
-}	
-.modal form label {
+
+.btn span {
+    float: left;
+    margin-top: 2px;
+}
+.material-icons {
+    font-family: 'Material Icons';
     font-weight: normal;
-}	
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;    
+    -webkit-font-smoothing: antialiased;
+  }
+  .search-box {
+    position: relative;        
+    float: right;
+}
+.search-box input {
+    height: 34px;
+    border-radius: 20px;
+    padding-left: 35px;
+    border-color: #ddd;
+    box-shadow: none;
+}
+.search-box input:focus {
+    border-color: #3FBAE4;
+}
+.search-box i {
+    color: #a0a5b1;
+    position: absolute;
+    font-size: 19px;
+    top: 8px;
+    left: 10px;
+}

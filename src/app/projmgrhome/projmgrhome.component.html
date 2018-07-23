@@ -1,37 +1,31 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div class="container">
   <div class="table-wrapper">
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6">
-          <h2>Project
-            <b>Manager</b>
+          <h2><b>Project Manager</b>            
           </h2>
         </div>
         <div class="col-sm-6">          
-          <a class="btn btn-info" data-toggle="modal" routerLink="viewtask">
+          <a class="btn btn-info" routerLink="viewtask">
             <i class="material-icons">&#xE147;</i>
             <span>View Task</span>
           </a> 
-          <a class="btn btn-primary" data-toggle="modal" routerLink="adduser">
+          <a class="btn btn-primary" routerLink="adduser">
             <i class="material-icons">&#xE147;</i>
             <span>Add User</span> 
           </a>
-          <a class="btn btn-danger" data-toggle="modal" routerLink="addtask">
+          <a class="btn btn-danger" routerLink="addtask">
             <i class="material-icons">&#xE147;</i>
             <span>Add Task</span>
           </a>
-          <a class="btn btn-success" data-toggle="modal" routerLink="addproject">
+          <a class="btn btn-success" routerLink="addproject">
             <i class="material-icons">&#xE147;</i>
             <span>Add Project</span>
-          </a>
+          </a>          
         </div>
-      </div>
-    </div>
-  </div>
+      </div>      
+    </div>            
+  </div>    
+  <router-outlet></router-outlet>        
 </div>
