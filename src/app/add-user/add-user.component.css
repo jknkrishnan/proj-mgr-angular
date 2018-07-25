@@ -33,7 +33,7 @@
     direction: ltr;    
     -webkit-font-smoothing: antialiased;
   }
-  .search-box {
+.search-box {
     position: relative;        
     float: right;
 }
@@ -53,4 +53,7 @@
     font-size: 19px;
     top: 8px;
     left: 10px;
+}
+.list-group-item {
+    padding: 3px 10px
 }
