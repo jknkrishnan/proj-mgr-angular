@@ -8,7 +8,7 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter users First Name" />
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter users First Name" [(ngModel)]="user_item.First_Name" />
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter users Last Name" />
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter users Last Name" [(ngModel)]="user_item.Last_Name"/>
           </div>
         </div>
       </div>
@@ -32,16 +32,16 @@
             <span class="input-group-addon">
               <i class="fa fa-users fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="emp_id" id="emp_id" placeholder="Enter users Employee ID" />
+            <input type="text" class="form-control" name="emp_id" id="emp_id" placeholder="Enter users Employee ID" [(ngModel)]="user_item.Employee_Id"/>
           </div>
         </div>
       </div>
       <div class="form-group row col-sm-10">
         <div class="col-sm-2">
-          <button type="button" class="btn btn-primary btn-lg btn-block login-button"><i class="material-icons">&#xE147;</i>Add User</button>
+          <button [disabled]="!visible" type="button" class="btn btn-primary" (click)="submit()"><i class="material-icons">&#xE147;</i>Add User</button>
         </div>
-        <div class="col-sm-2">
-          <button type="button" class="btn btn-primary btn-lg btn-block login-button"><i class="material-icons">&#xE15C;</i>Reset User</button>
+        <div class="col-sm-2">         
+          <button type="button" class="btn btn-primary" (click)="reset()"><i class="material-icons">&#xE15C;</i>Reset User</button>
         </div>
       </div>
       <!-- </form> -->
@@ -53,30 +53,30 @@
   <div class="col-sm-5">
     <div id="custom-search-input">
       <div class="input-group col-md-12 search-box">                
-        <input type="text" class="form-control" placeholder="Search"/>
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText"/>
       </div>
     </div>
   </div>
   <div class="col-sm-6">
-    <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>Employee ID</button>
-    <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>Last Name</button>
-    <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>First Name</button>
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px"><i class="material-icons">&#xE042;</i>Employee ID</button>
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px"><i class="material-icons">&#xE042;</i>Last Name</button>
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px"><i class="material-icons">&#xE042;</i>First Name</button>
     <h5>
       <b>Sort Tasks By:</b>
     </h5>
   </div>  
 </div>
 <br/><br/><br/>
-<div class="row col-sm-10">
+<div class="row col-sm-10" *ngFor="let _user of user_all|user_filter:searchText">
   <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
   <div class="col-sm-5">
       <ul class="list-group list-group-flush">
-          <li class="list-group-item disabled">First Name:</li>
-          <li class="list-group-item disabled">Last Name:</li>
-          <li class="list-group-item disabled">Employee ID:</li>
+          <li class="list-group-item disabled">First Name: <b>{{_user.First_Name}}</b></li>
+          <li class="list-group-item disabled">Last Name: <b>{{_user.Last_Name}}</b></li>
+          <li class="list-group-item disabled">Employee ID: <b>{{_user.Employee_Id}}</b></li>
       </ul>
   </div>  
-  <button type="button" class="btn btn-primary btn-sm"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>Delete</button>    
-  <button type="button" class="btn btn-primary btn-sm"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>Edit</button>      
+  <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>Delete</button>    
+  <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>Edit</button>      
   <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;"/>
 </div>

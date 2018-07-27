@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ProjmgrhomeComponent } from './projmgrhome/projmgrhome.component';
@@ -10,6 +12,7 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { AddParentComponent } from './add-parent/add-parent.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { UserFilterPipe} from './add-user/user-filter.pipe';
 
 const appRoute : Routes = [
   { path:'adduser', component:AddUserComponent}, 
@@ -27,10 +30,13 @@ const appRoute : Routes = [
     AddProjectComponent,
     ViewTaskComponent,
     AddParentComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    UserFilterPipe
   ],
   imports: [
+    FormsModule,
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoute)
   ],
   providers: [],

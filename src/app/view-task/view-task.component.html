@@ -6,21 +6,28 @@
       </h4>
     </div>
     <div class="col-sm-5">
-      <div id="custom-search-input">
-        <div class="input-group col-md-12 search-box">
-          <input type="text" class="search-query form-control" placeholder="Search" />
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="button">Search</button>                          
-          </span>                    
-        </div>        
-      </div>      
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-user fa" aria-hidden="true"></i>
+        </span>
+        <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" disabled />
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button">Search</button>
+        </span>
+      </div>
     </div>
     <div class="col-sm-6">
-      <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>Completed</button>
-      <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>Priority</button>
-      <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>End Date</button>
-      <button type="button" class="btn btn-primary btn-sm"><i class="material-icons">&#xE042;</i>Start Date</button>
-      <h5><b>Sort Tasks By:</b></h5>            
+      <button type="button" class="btn btn-primary btn-sm">
+        <i class="material-icons">&#xE042;</i>Completed</button>
+      <button type="button" class="btn btn-primary btn-sm">
+        <i class="material-icons">&#xE042;</i>Priority</button>
+      <button type="button" class="btn btn-primary btn-sm">
+        <i class="material-icons">&#xE042;</i>End Date</button>
+      <button type="button" class="btn btn-primary btn-sm">
+        <i class="material-icons">&#xE042;</i>Start Date</button>
+      <h5>
+        <b>Sort Tasks By:</b>
+      </h5>
     </div>
   </div>
 </div>
@@ -35,19 +42,19 @@
             <label for="selectAll"></label>
           </span>
         </th>
-        <th>          
+        <th>
           Task
         </th>
-        <th>          
+        <th>
           Parent
         </th>
-        <th>          
+        <th>
           Priority
         </th>
-        <th>          
+        <th>
           Start Date
         </th>
-        <th>          
+        <th>
           End Date
         </th>
         <th></th>
