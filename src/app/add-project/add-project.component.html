@@ -8,7 +8,8 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" />
+            <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" 
+            [(ngModel)]="project_item.Project_Name" />
           </div>
         </div>
       </div>
@@ -17,7 +18,8 @@
       <div class="form-group col-sm-7">
         <div class="cols-sm-4">
           <span class="custom-checkbox">
-            <input type="checkbox" id="checkbox1" name="options[]" value="1">
+            <input type="checkbox" id="checkbox1" name="options[]" 
+            [(ngModel)]="str_check">
             <label for="checkbox1">Set start date and end date</label>
           </span>
         </div>
@@ -29,7 +31,8 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="date" class="form-control" name="strdate" id="strdate" />
+            <input type="date" class="form-control" name="strdate" id="strdate" [disabled]="!str_check" 
+            [(ngModel)]="project_item.Start_Date" />
           </div>
         </div>
       </div>
@@ -40,7 +43,8 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="date" class="form-control" name="enddate" id="enddate" />
+            <input type="date" class="form-control" name="enddate" id="enddate" [disabled]="!str_check" 
+            [(ngModel)]="project_item.End_Date" />
           </div>
         </div>
       </div>
@@ -48,8 +52,9 @@
         <label for="name" class="cols-sm-2 control-label">Priority</label>
         <div class="cols-sm-10">
           <div class="range range-primary">
-            <input type="range" name="range" min="1" max="30" value="0" onchange="rangePrimary.value=value">
-            <output id="rangePrimary">0</output>
+            <input type="range" name="range" min="0" max="30" value="project_item.Priority" 
+            onchange="rangePrimary.value=value" [(ngModel)]="project_item.Priority">
+            <output id="rangePrimary">{{project_item.Priority}}</output>
           </div>
         </div>
       </div>

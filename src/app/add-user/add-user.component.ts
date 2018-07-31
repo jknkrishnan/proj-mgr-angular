@@ -13,6 +13,8 @@ export class AddUserComponent implements OnInit {
   user_item : User;
   user_all : User[];
   visible : boolean = false;
+  caption : string = "Add User";
+  sortCaption : string = "First_Name";
 
 
   @HostListener("input") input(eventdata : Event)
@@ -25,30 +27,98 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.get();
+    this.caption = "Add User";
+    this.resetuser();
+  }
+
+  setVisibility() : boolean
+  {    
+    return ((this.user_item.Employee_Id != null) && (this.user_item.First_Name != null) 
+      && (this.user_item.Last_Name != null))  
+  }
+
+  submituser()
+  {
+    if (this.user_item.User_Id > 0)
+    {
+      this.updateuser();
+    }
+    else
+    {
+      this.adduser();
+    }
+  }
+
+  resetuser()
+  {
+    this.user_item.Employee_Id = null;
+    this.user_item.First_Name = null;
+    this.user_item.Last_Name = null;
+    this.user_item.User_Id = null;
+    this.caption = "Add User";
+  }
+
+  getuser(record : number)
+  {
+    this.userservice.getById(record).subscribe((obj) => {  
+      console.log(obj);     
+      this.user_item = obj[0];
+      this.caption = "Update User";
+      this.visible = this.setVisibility();
+    });
+  }
+
+  adduser()
+  {
+    this.userservice.post(this.user_item).subscribe((obj) => {  
+      console.log(obj);  
+      this.get();
+    });
+  }
+
+  updateuser()
+  {
+    this.userservice.put(this.user_item.User_Id, this.user_item).subscribe((obj) => {  
+      console.log(obj);  
+      this.get();
+      this.resetuser();
+    });
+  }
+
+  get()
+  {
     this.userservice.get().subscribe((obj) => {  
       console.log(obj);     
       this.user_all = obj
     });
   }
 
-  setVisibility() : boolean
+  deleteuser(record : number)
+  {
+    this.userservice.delete(record).subscribe((obj) => {  
+      console.log(obj);  
+      this.get();
+      this.resetuser();
+    });
+  }
+  
+  sort(str :string)
   {    
-    return ((this.user_item.Employee_Id != null) && (this.user_item.First_Name != null) 
-    && (this.user_item.Last_Name != null))  
+    if (str==='F')
+    {
+      this.sortCaption = "First_Name";
+    }
+    else 
+    if (str==='L')
+    {
+      this.sortCaption = "Last_Name";
+    }
+    else 
+    if (str==='E')
+    {
+      this.sortCaption = "Employee_Id";
+    }    
+
   }
-
-  submit()
-  {
-    
-  }
-
-  reset()
-  {
-    this.user_item.Employee_Id = null;
-    this.user_item.First_Name = null;
-    this.user_item.Last_Name = null;
-    this.user_item.User_Id = null;
-  }
-
-
 }

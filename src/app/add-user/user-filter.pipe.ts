@@ -7,7 +7,7 @@ export class UserFilterPipe implements PipeTransform {
   
     transform(users : User[], searchText: string): User[] 
     {           
-        if (users && users.length){
+        if (users && users.length){            
             return users.filter(myfilter =>{
                 if ((searchText) && (myfilter.First_Name.toLowerCase().indexOf(searchText.toLowerCase()) === -1)
                     &&  (myfilter.Last_Name.toLowerCase().indexOf(searchText.toLowerCase()) === -1)

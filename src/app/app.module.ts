@@ -13,6 +13,7 @@ import { ViewTaskComponent } from './view-task/view-task.component';
 import { AddParentComponent } from './add-parent/add-parent.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { UserFilterPipe} from './add-user/user-filter.pipe';
+import {UserSortFilterPipe} from './add-user/user-sort.pipe';
 
 const appRoute : Routes = [
   { path:'adduser', component:AddUserComponent}, 
@@ -31,7 +32,8 @@ const appRoute : Routes = [
     ViewTaskComponent,
     AddParentComponent,
     AddTaskComponent,
-    UserFilterPipe
+    UserFilterPipe,
+    UserSortFilterPipe
   ],
   imports: [
     FormsModule,
