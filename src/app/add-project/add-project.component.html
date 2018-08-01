@@ -9,7 +9,8 @@
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
             <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" 
-            [(ngModel)]="project_item.Project_Name" />
+            [(ngModel)]="project_item.Project_Name"
+            />
           </div>
         </div>
       </div>
@@ -18,8 +19,7 @@
       <div class="form-group col-sm-7">
         <div class="cols-sm-4">
           <span class="custom-checkbox">
-            <input type="checkbox" id="checkbox1" name="options[]" 
-            [(ngModel)]="str_check">
+            <input type="checkbox" id="checkbox1" name="options[]" [(ngModel)]="str_check">
             <label for="checkbox1">Set start date and end date</label>
           </span>
         </div>
@@ -32,7 +32,8 @@
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
             <input type="date" class="form-control" name="strdate" id="strdate" [disabled]="!str_check" 
-            [(ngModel)]="project_item.Start_Date" />
+            [(ngModel)]="project_item.Start_Date"
+            />
           </div>
         </div>
       </div>
@@ -44,7 +45,8 @@
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
             <input type="date" class="form-control" name="enddate" id="enddate" [disabled]="!str_check" 
-            [(ngModel)]="project_item.End_Date" />
+            [(ngModel)]="project_item.End_Date"
+            />
           </div>
         </div>
       </div>
@@ -52,8 +54,8 @@
         <label for="name" class="cols-sm-2 control-label">Priority</label>
         <div class="cols-sm-10">
           <div class="range range-primary">
-            <input type="range" name="range" min="0" max="30" value="project_item.Priority" 
-            onchange="rangePrimary.value=value" [(ngModel)]="project_item.Priority">
+            <input type="range" name="range" min="1" max="30" value="project_item.Priority" onchange="rangePrimary.value=value" 
+            [(ngModel)]="project_item.Priority">
             <output id="rangePrimary">{{project_item.Priority}}</output>
           </div>
         </div>
@@ -65,17 +67,18 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="manager" id="manager" placeholder="Enter manager Name" disabled />
+            <input type="text" class="form-control" name="manager" id="manager" placeholder="Enter manager Name" 
+            [(ngModel)]="project_item.FullName" disabled />
             <span class="input-group-btn">
-              <button class="btn btn-primary" type="button">Search</button>
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Search</button>
             </span>
           </div>
         </div>
       </div>
       <div class="form-group row col-sm-12">
         <div class="col-sm-2">
-          <button type="button" class="btn btn-primary  btn-block login-button">
-            <i class="material-icons">&#xE147;</i>Add Project</button>
+          <button [disabled]="!visible" type="button" class="btn btn-primary  btn-block login-button" (click)="submitproject()">
+            <i class="material-icons">&#xE147;</i>{{caption}}</button>
         </div>
         <div class="col-sm-2">
           <button type="button" class="btn btn-primary  btn-block login-button">
@@ -85,6 +88,7 @@
     </div>
   </div>
 </div>
+<p class="text-warning">{{errorCaption}}</p>
 <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
 <div class="row col-sm-12">
   <div class="col-sm-6">
@@ -143,4 +147,29 @@
 </div>
 <div class="row col-sm-12">
   <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
+</div>
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">						
+          <h4 class="modal-title">Search User</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">					
+          <div class="form-group" >                       
+            <ul id="grouplist" class="list-group">
+              <li class="list-group-item" [ngClass]="{'active': selectedItem == item}" (click)="listClick($event, item)" *ngFor="let item of user_all">
+                {{item.First_Name}} {{item.Last_Name}} - {{item.Employee_Id}}
+              </li>
+            </ul>
+          </div>          					
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+          <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectUser()">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

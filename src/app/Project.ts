@@ -5,4 +5,5 @@ export class Project {
     End_Date : Date;
     Priority : number;
     User_Id : number;
+    FullName : string;
 }
