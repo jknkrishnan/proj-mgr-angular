@@ -4,6 +4,8 @@ export class Project {
     Start_Date : Date;
     End_Date : Date;
     Priority : number;
-    User_Id : number;
+    Suspend : number;
+    Remarks : string;
+    User_Id : number;    
     FullName : string;
 }

@@ -10,10 +10,11 @@ import { ProjmgrhomeComponent } from './projmgrhome/projmgrhome.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
-import { AddParentComponent } from './add-parent/add-parent.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { UserFilterPipe} from './add-user/user-filter.pipe';
-import {UserSortFilterPipe} from './add-user/user-sort.pipe';
+import { UserSortFilterPipe} from './add-user/user-sort.pipe';
+import {ProjectFilterPipe} from './add-project/project-filter.pipe';
+import {ProjectSortFilterPipe} from './add-project/project-sort.pipe';
 
 const appRoute : Routes = [
   { path:'adduser', component:AddUserComponent}, 
@@ -29,11 +30,12 @@ const appRoute : Routes = [
     ProjmgrhomeComponent,
     AddUserComponent,
     AddProjectComponent,
-    ViewTaskComponent,
-    AddParentComponent,
+    ViewTaskComponent,    
     AddTaskComponent,
     UserFilterPipe,
-    UserSortFilterPipe
+    UserSortFilterPipe,    
+    ProjectFilterPipe,
+    ProjectSortFilterPipe    
   ],
   imports: [
     FormsModule,
@@ -46,3 +48,4 @@ const appRoute : Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

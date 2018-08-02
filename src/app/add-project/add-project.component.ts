@@ -3,6 +3,7 @@ import { Project } from '../Project';
 import {Router} from  '@angular/router';
 import { User } from '../User';
 import { UserService } from '../services/user.service';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-add-project',
@@ -12,6 +13,7 @@ import { UserService } from '../services/user.service';
 export class AddProjectComponent implements OnInit {
 
   project_item : Project;
+  usr : User;
   project_all  : Project[];
   user_all : User[];
   visible : boolean = false;
@@ -21,6 +23,7 @@ export class AddProjectComponent implements OnInit {
   selectedItem : User;
   selectedUser : User;
   errorCaption : string = "";  
+  today : Date;
     
 
   @HostListener("input") input(eventdata : Event)
@@ -29,21 +32,25 @@ export class AddProjectComponent implements OnInit {
   }
   
   
-  constructor(private userrouter : Router, private userservice : UserService) 
+  constructor(private userrouter : Router, private userservice : UserService, private projservice : ProjectService) 
   { 
     this.project_item = new Project();     
-    this.project_item.Priority = 1;
+    this.project_item.Priority = 0;
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.getuser();
+    this.get();
+    this.caption = "Add Project";
+    this.resetproject();
   }
 
   setVisibility() : boolean
   {
     if (this.str_check)
     {
-      this.visible = (this.project_item.Project_Name != null) && (this.project_item.Start_Date != null) && (this.project_item.End_Date != null)
+      this.visible = (this.project_item.Project_Name != null) && 
+      (this.project_item.Start_Date != null) && (this.project_item.End_Date != null)
       && (this.project_item.User_Id != null)
     }
     else
@@ -82,7 +89,110 @@ export class AddProjectComponent implements OnInit {
       this.errorCaption = "Project start date is greater than end date"; 
       return;          
     }
-    
+    this.project_item.Remarks = 'No';
+    this.project_item.Suspend = 0;
+
+    if (this.project_item.Project_Id > 0)
+    {
+      this.updateproject();
+    }
+    else
+    {
+      this.addproject();
+    }    
+  }
+
+  get()
+  {
+    this.projservice.get().subscribe((obj) => {  
+      console.log(obj);     
+      this.project_all = obj
+    });
+  }
+
+  resetproject()
+  {
+    this.project_item.Project_Id = null;
+    this.project_item.Project_Name = null;
+    this.project_item.Start_Date = null;
+    this.project_item.End_Date = null;
+    this.project_item.Priority = 0;
+    this.project_item.User_Id = null;
+    this.project_item.FullName = null;
+    this.caption = "Add Project";    
+  }
+
+  getproject(record : number,flag : string)
+  {
+    this.projservice.getById(record).subscribe((obj) => {  
+      console.log(obj);     
+      this.project_item = obj[0];
+      if (this.project_item.Start_Date === null)
+      {
+        this.str_check = false;
+      }
+      else
+      {
+        this.str_check = true;
+      }
+      this.userservice.getById(this.project_item.User_Id).subscribe((obj) => {
+        this.usr = obj[0];
+        this.project_item.FullName =  this.usr.First_Name + " " + this.usr.Last_Name; 
+      });
+      this.caption = "Update Project";
+      this.visible = this.setVisibility();      
+      if (flag === 'S')
+      {
+        this.project_item.Remarks = 'Suspended';
+        this.project_item.Suspend = 1;        
+        this.updateproject();
+      }
+    });    
+  }
+
+  addproject()
+  {    
+    this.projservice.post(this.project_item).subscribe((obj) => {  
+      console.log(obj);  
+      this.get();
+      this.resetproject();
+      this.visible = this.setVisibility();
+    });
+  }
+
+  updateproject()
+  {
+    this.projservice.put(this.project_item.Project_Id, 
+      this.project_item).subscribe((obj) => {  
+      console.log(obj);  
+      this.get();
+      this.resetproject();
+      this.visible = this.setVisibility();
+    });
+  }    
+
+  sort(str :string)
+  {    
+    if (str==='S')
+    {
+      this.sortCaption = "Start_Date";
+    }
+    else 
+    if (str==='E')
+    {
+      this.sortCaption = "End_Date";
+    }
+    else 
+    if (str==='P')
+    {
+      this.sortCaption = "Priority";
+    } 
+    else 
+    if (str==='R')
+    {
+      this.sortCaption = "Remarks";
+    }     
+
   }
 
 }

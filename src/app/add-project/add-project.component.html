@@ -8,8 +8,7 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" 
-            [(ngModel)]="project_item.Project_Name"
+            <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" [(ngModel)]="project_item.Project_Name"
             />
           </div>
         </div>
@@ -31,8 +30,7 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="date" class="form-control" name="strdate" id="strdate" [disabled]="!str_check" 
-            [(ngModel)]="project_item.Start_Date"
+            <input type="date" class="form-control" name="strdate" id="strdate" [disabled]="!str_check" [(ngModel)]="project_item.Start_Date"
             />
           </div>
         </div>
@@ -44,8 +42,7 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="date" class="form-control" name="enddate" id="enddate" [disabled]="!str_check" 
-            [(ngModel)]="project_item.End_Date"
+            <input type="date" class="form-control" name="enddate" id="enddate" [disabled]="!str_check" [(ngModel)]="project_item.End_Date"
             />
           </div>
         </div>
@@ -54,8 +51,7 @@
         <label for="name" class="cols-sm-2 control-label">Priority</label>
         <div class="cols-sm-10">
           <div class="range range-primary">
-            <input type="range" name="range" min="1" max="30" value="project_item.Priority" onchange="rangePrimary.value=value" 
-            [(ngModel)]="project_item.Priority">
+            <input type="range" name="range" min="0" max="30" value="project_item.Priority" onchange="rangePrimary.value=value" [(ngModel)]="project_item.Priority">
             <output id="rangePrimary">{{project_item.Priority}}</output>
           </div>
         </div>
@@ -67,8 +63,8 @@
             <span class="input-group-addon">
               <i class="fa fa-user fa" aria-hidden="true"></i>
             </span>
-            <input type="text" class="form-control" name="manager" id="manager" placeholder="Enter manager Name" 
-            [(ngModel)]="project_item.FullName" disabled />
+            <input type="text" class="form-control" name="manager" id="manager" placeholder="Enter manager Name" [(ngModel)]="project_item.FullName"
+              disabled />
             <span class="input-group-btn">
               <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Search</button>
             </span>
@@ -81,7 +77,7 @@
             <i class="material-icons">&#xE147;</i>{{caption}}</button>
         </div>
         <div class="col-sm-2">
-          <button type="button" class="btn btn-primary  btn-block login-button">
+          <button type="button" class="btn btn-primary  btn-block login-button" (click)="resetproject()">
             <i class="material-icons">&#xE15C;</i>Reset Project</button>
         </div>
       </div>
@@ -94,82 +90,93 @@
   <div class="col-sm-6">
     <div id="custom-search-input">
       <div class="input-group col-md-12 search-box">
-        <input type="text" class="form-control" placeholder="Search" />
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" />
       </div>
     </div>
   </div>
   <div class="col-sm-6">
     <label>Sort task by:</label>
-    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px">
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px" (click)="sort('S')">
       <i class="material-icons">&#xE042;</i>Start date</button>
-    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px">
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px" (click)="sort('F')">
       <i class="material-icons">&#xE042;</i>End date</button>
-    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px">
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px" (click)="sort('P')">
       <i class="material-icons">&#xE042;</i>Priority</button>
-    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px">
+    <button type="button" class="btn btn-primary btn-sm" style="margin-left: 10px" (click)="sort('R')">
       <i class="material-icons">&#xE042;</i>Completed</button>
   </div>
 </div>
-<div class="row col-sm-12">
-  <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
-</div>
-<div class="col-sm-12">
-  <ul class="list-group list-group-flush disabled">
-    <div class="col-sm-5">
-      <li class="list-group-item disabled">Project:</li>
-    </div>
-    <div class="col-sm-5">
-      <li class="list-group-item disabled">Priority:</li>
-    </div>
-    <div class="col-sm-5">
-      <li class="list-group-item disabled">No of tasks:</li>
-    </div>
-    <div class="col-sm-5">
-      <li class="list-group-item disabled">Completed:</li>
-    </div>
-    <div class="col-sm-5">
-      <li class="list-group-item disabled">Start date:</li>
-    </div>
-    <div class="col-sm-5">
-      <li class="list-group-item disabled">End date:</li>
-    </div>
-  </ul>
-</div>
-<div class="form-group row col-sm-12">
-  <div class="col-sm-2">
-    <button type="button" class="btn btn-primary btn-block login-button" style="margin-top: 20px">
-      <i class="material-icons">&#xE254;</i>Update Project</button>
+<div *ngFor="let project of project_all|proj_filter:searchText|project_sort:sortCaption">
+  <div class="row col-sm-12">
+    <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
   </div>
-  <div class="col-sm-2">
-    <button type="button" class="btn btn-primary btn-block login-button" style="margin-top: 20px">
-      <i class="material-icons">&#xE872;</i>Suspend Project</button>
+  <div class="col-sm-12">
+    <ul class="list-group list-group-flush disabled">
+      <div class="col-sm-5">
+        <li class="list-group-item disabled">Project:
+          <b>{{project.Project_Name}}</b>
+        </li>
+      </div>
+      <div class="col-sm-5">
+        <li class="list-group-item disabled">Priority:
+          <b>{{project.Priority}}</b>
+        </li>
+      </div>
+      <div class="col-sm-5">
+        <li class="list-group-item disabled">No of tasks:</li>
+      </div>
+      <div class="col-sm-5">
+        <li class="list-group-item disabled">Completed:
+          <b>{{project.Remarks}}</b>
+        </li>
+      </div>
+      <div class="col-sm-5">
+        <li class="list-group-item disabled">Start date:
+          <b>{{project.Start_Date}}</b>
+        </li>
+      </div>
+      <div class="col-sm-5">
+        <li class="list-group-item disabled">End date:
+          <b>{{project.End_Date}}</b>
+        </li>
+      </div>
+    </ul>
   </div>
-</div>
-<div class="row col-sm-12">
-  <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
+  <div class="form-group row col-sm-12">
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary btn-block login-button" style="margin-top: 20px" (click)="getproject(project.Project_Id,'G')">
+        <i class="material-icons">&#xE254;</i>Update Project</button>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-primary btn-block login-button" style="margin-top: 20px" (click)="getproject(project.Project_Id,'S')">
+        <i class="material-icons">&#xE872;</i>Suspend Project</button>
+    </div>
+  </div>
+  <div class="row col-sm-12">
+    <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
+  </div>
 </div>
 <div id="myModal" class="modal fade">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">						
+    <div class="modal-content">      
+        <div class="modal-header">
           <h4 class="modal-title">Search User</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <br/>
+          <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" />
         </div>
-        <div class="modal-body">					
-          <div class="form-group" >                       
-            <ul id="grouplist" class="list-group">
-              <li class="list-group-item" [ngClass]="{'active': selectedItem == item}" (click)="listClick($event, item)" *ngFor="let item of user_all">
-                {{item.First_Name}} {{item.Last_Name}} - {{item.Employee_Id}}
+        <div class="modal-body">
+          <div class="form-group">
+            <ul id="grouplist" class="list-group" *ngFor="let item of user_all|user_filter:searchText">
+              <li class="list-group-item" [ngClass]="{'active': selectedItem == item}" (click)="listClick($event, item)">
+                {{item.First_Name}} {{item.Last_Name}}
               </li>
             </ul>
-          </div>          					
+          </div>
         </div>
         <div class="modal-footer">
           <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
           <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectUser()">
-        </div>
-      </form>
+        </div>    
     </div>
   </div>
 </div>

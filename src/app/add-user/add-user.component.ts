@@ -74,6 +74,8 @@ export class AddUserComponent implements OnInit {
     this.userservice.post(this.user_item).subscribe((obj) => {  
       console.log(obj);  
       this.get();
+      this.resetuser();
+      this.visible = this.setVisibility();
     });
   }
 
@@ -83,6 +85,7 @@ export class AddUserComponent implements OnInit {
       console.log(obj);  
       this.get();
       this.resetuser();
+      this.visible = this.setVisibility();
     });
   }
 
@@ -100,6 +103,7 @@ export class AddUserComponent implements OnInit {
       console.log(obj);  
       this.get();
       this.resetuser();
+      this.visible = this.setVisibility();
     });
   }
   
