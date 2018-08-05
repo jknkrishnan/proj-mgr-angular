@@ -8,9 +8,10 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user fa" aria-hidden="true"></i>
                         </span>
-                        <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" disabled />
+                        <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" 
+                        disabled [(ngModel)]="task_item.ProjectName" />
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">Search</button>
+                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myProject">Search</button>
                         </span>
                     </div>
                 </div>
@@ -22,14 +23,16 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user fa" aria-hidden="true"></i>
                         </span>
-                        <input type="text" class="form-control" name="task" id="task" placeholder="Enter task Name" />
+                        <input type="text" class="form-control" name="task" id="task" placeholder="Enter task Name" 
+                        [(ngModel)]="task_item.TaskDesc"/>
                     </div>
                 </div>
             </div>
             <div class="form-group col-sm-7">
                 <div class="cols-sm-4">
                     <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                        <input type="checkbox" id="checkbox1" name="options[]" value="1" 
+                        [(ngModel)]="str_check" (change)="parentchange()">
                         <label for="checkbox1">Parent Task</label>
                     </span>
                 </div>
@@ -38,8 +41,25 @@
                 <label for="name" class="cols-sm-2 control-label">Priority</label>
                 <div class="cols-sm-10">
                     <div class="range range-primary">
-                        <input type="range" name="range" min="1" max="30" value="0" onchange="rangePrimary.value=value">
+                        <input type="range" name="range" min="0" max="30" value="0" onchange="rangePrimary.value=value" 
+                        [disabled]="str_check" [(ngModel)]="task_item.Priority">
                         <output id="rangePrimary">0</output>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-sm-7">
+                <label for="parent" class="cols-sm-2 control-label">Parent Task</label>
+                <div class="cols-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user fa" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="parent" id="parent" placeholder="Enter parent Name" 
+                        disabled [(ngModel)]="task_item.ParentName" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" data-toggle="modal" 
+                            data-target="#myParent" [disabled]="str_check">Search</button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -50,7 +70,8 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user fa" aria-hidden="true"></i>
                         </span>
-                        <input type="date" class="form-control" name="strdate" id="strdate" />
+                        <input type="date" class="form-control" name="strdate" id="strdate" [disabled]="str_check" 
+                        [(ngModel)]="task_item.StartDate" />
                     </div>
                 </div>
             </div>
@@ -61,7 +82,8 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user fa" aria-hidden="true"></i>
                         </span>
-                        <input type="date" class="form-control" name="enddate" id="enddate" />
+                        <input type="date" class="form-control" name="enddate" id="enddate" [disabled]="str_check" 
+                        [(ngModel)]="task_item.EndDate" />
                     </div>
                 </div>
             </div>
@@ -72,42 +94,99 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user fa" aria-hidden="true"></i>
                         </span>
-                        <input type="text" class="form-control" name="user" id="user" placeholder="Enter user Name" disabled />
+                        <input type="text" class="form-control" name="user" id="user" placeholder="Enter user Name" disabled 
+                        [(ngModel)]="task_item.FullName" />
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">Search</button>
+                            <button class="btn btn-primary" [disabled]="str_check"  
+                            type="button" data-toggle="modal" data-target="#myModal">Search</button>
                         </span>
                     </div>
                 </div>
             </div>
             <div class="form-group row col-sm-12">
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary  btn-block login-button">
-                        <i class="material-icons">&#xE147;</i>Add Task</button>
+                    <button [disabled]="!visible" type="button" class="btn btn-primary  btn-block login-button" (click)="add()">
+                        <i class="material-icons">&#xE147;</i>{{caption}}</button>
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary  btn-block login-button">
-                        <i class="material-icons">&#xE15C;</i>Reset Task</button>
+                    <button type="button" class="btn btn-primary  btn-block login-button" (click)="resettask()">
+                        <i class="material-icons">&#xE15C;</i>Reset</button>
                 </div>
-            </div>            
+            </div>                
         </div>
     </div>
 </div> 
-<!-- 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<p class="text-danger">{{errorCaption}}</p>        
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">      
+          <div class="modal-header">
+            <h4 class="modal-title">Search User</h4>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" />
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <ul id="grouplist" class="list-group" *ngFor="let item of user_all|user_filter:searchText">
+                <li class="list-group-item" [ngClass]="{'active': selectedItem == item}" (click)="listClick($event, item)">
+                  {{item.First_Name}} {{item.Last_Name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectUser()">
+          </div>    
       </div>
     </div>
-
   </div>
-</div> -->
+  <div id="myProject" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">      
+          <div class="modal-header">
+            <h4 class="modal-title">Search Project</h4>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" />
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <ul id="grouplist" class="list-group" *ngFor="let item of project_all|proj_filter:searchText">
+                <li class="list-group-item" [ngClass]="{'active': navigateProj == item}" (click)="listProjectClick($event, item)">
+                  {{item.Project_Name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectProject()">
+          </div>    
+      </div>
+    </div>
+  </div>
+  <div id="myParent" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">      
+          <div class="modal-header">
+            <h4 class="modal-title">Search Parent</h4>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" />
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <ul id="grouplist" class="list-group" *ngFor="let item of parent_all|parent_filter:searchText">
+                <li class="list-group-item" [ngClass]="{'active': navigateParent == item}" (click)="listParentClick($event, item)">
+                  {{item.Parent_Task}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectParent()">
+          </div>    
+      </div>
+    </div>
+  </div>
+

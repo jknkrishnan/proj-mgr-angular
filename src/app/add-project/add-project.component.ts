@@ -4,6 +4,7 @@ import {Router} from  '@angular/router';
 import { User } from '../User';
 import { UserService } from '../services/user.service';
 import { ProjectService } from '../services/project.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-project',
@@ -24,14 +25,16 @@ export class AddProjectComponent implements OnInit {
   selectedUser : User;
   errorCaption : string = "";  
   today : Date;
-    
+  dtStart : Date;
+  dtEnd : Date;   
+
+  @ViewChild('panel') public panel:ElementRef;
 
   @HostListener("input") input(eventdata : Event)
   {
     this.visible = this.setVisibility();
   }
-  
-  
+    
   constructor(private userrouter : Router, private userservice : UserService, private projservice : ProjectService) 
   { 
     this.project_item = new Project();     
@@ -84,7 +87,9 @@ export class AddProjectComponent implements OnInit {
 
   submitproject()
   {
-    if ((this.str_check) && (this.project_item.Start_Date > this.project_item.End_Date))
+    this.dtStart = new Date(this.project_item.Start_Date);
+    this.dtEnd = new Date(this.project_item.End_Date);
+    if ((this.str_check) && (this.dtStart> this.dtEnd))
     {      
       this.errorCaption = "Project start date is greater than end date"; 
       return;          
@@ -104,9 +109,8 @@ export class AddProjectComponent implements OnInit {
 
   get()
   {
-    this.projservice.get().subscribe((obj) => {  
-      console.log(obj);     
-      this.project_all = obj
+    this.projservice.get().subscribe((obj) => {        
+      this.project_all = obj      
     });
   }
 
@@ -114,8 +118,9 @@ export class AddProjectComponent implements OnInit {
   {
     this.project_item.Project_Id = null;
     this.project_item.Project_Name = null;
-    this.project_item.Start_Date = null;
-    this.project_item.End_Date = null;
+    let dt = new Date();
+    this.project_item.Start_Date = moment(dt).format('YYYY-MM-DD');
+    this.project_item.End_Date = moment(moment()).add(1, 'days').format('YYYY-MM-DD');
     this.project_item.Priority = 0;
     this.project_item.User_Id = null;
     this.project_item.FullName = null;
@@ -124,9 +129,10 @@ export class AddProjectComponent implements OnInit {
 
   getproject(record : number,flag : string)
   {
-    this.projservice.getById(record).subscribe((obj) => {  
-      console.log(obj);     
-      this.project_item = obj[0];
+    this.projservice.getById(record).subscribe((obj) => {          
+      this.project_item = obj[0];           
+      this.project_item.Start_Date = moment(this.project_item.Start_Date).format('YYYY-MM-DD');
+      this.project_item.End_Date   = moment(this.project_item.End_Date).format('YYYY-MM-DD');
       if (this.project_item.Start_Date === null)
       {
         this.str_check = false;
@@ -140,13 +146,14 @@ export class AddProjectComponent implements OnInit {
         this.project_item.FullName =  this.usr.First_Name + " " + this.usr.Last_Name; 
       });
       this.caption = "Update Project";
-      this.visible = this.setVisibility();      
+      this.visible = this.setVisibility();            
       if (flag === 'S')
       {
         this.project_item.Remarks = 'Suspended';
         this.project_item.Suspend = 1;        
         this.updateproject();
       }
+      this.moveToSpecificView();
     });    
   }
 
@@ -167,7 +174,7 @@ export class AddProjectComponent implements OnInit {
       console.log(obj);  
       this.get();
       this.resetproject();
-      this.visible = this.setVisibility();
+      this.visible = this.setVisibility();      
     });
   }    
 
@@ -195,5 +202,10 @@ export class AddProjectComponent implements OnInit {
 
   }
 
+  public moveToSpecificView(): void {
+    setTimeout(() => {
+        this.panel.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
+    });
+  }
 }
 

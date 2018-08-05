@@ -15,6 +15,7 @@ import { UserFilterPipe} from './add-user/user-filter.pipe';
 import { UserSortFilterPipe} from './add-user/user-sort.pipe';
 import {ProjectFilterPipe} from './add-project/project-filter.pipe';
 import {ProjectSortFilterPipe} from './add-project/project-sort.pipe';
+import {ParentFilterPipe} from './add-task/parent-filter.pipe';
 
 const appRoute : Routes = [
   { path:'adduser', component:AddUserComponent}, 
@@ -35,7 +36,8 @@ const appRoute : Routes = [
     UserFilterPipe,
     UserSortFilterPipe,    
     ProjectFilterPipe,
-    ProjectSortFilterPipe    
+    ProjectSortFilterPipe,
+    ParentFilterPipe    
   ],
   imports: [
     FormsModule,

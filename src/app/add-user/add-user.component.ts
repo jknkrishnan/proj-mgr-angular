@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../User';
 import {Router} from  '@angular/router';
 import { UserService } from '../services/user.service';
@@ -16,6 +16,7 @@ export class AddUserComponent implements OnInit {
   caption : string = "Add User";
   sortCaption : string = "First_Name";
 
+  @ViewChild('panel') public panel:ElementRef;
 
   @HostListener("input") input(eventdata : Event)
   {
@@ -86,6 +87,7 @@ export class AddUserComponent implements OnInit {
       this.get();
       this.resetuser();
       this.visible = this.setVisibility();
+      this.moveToSpecificView();
     });
   }
 
@@ -104,6 +106,7 @@ export class AddUserComponent implements OnInit {
       this.get();
       this.resetuser();
       this.visible = this.setVisibility();
+      this.moveToSpecificView();
     });
   }
   
@@ -125,4 +128,10 @@ export class AddUserComponent implements OnInit {
     }    
 
   }
+
+  public moveToSpecificView(): void {
+    setTimeout(() => {
+        this.panel.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
+    });
+  } 
 }
