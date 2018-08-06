@@ -23,7 +23,8 @@ export class AddTaskComponent implements OnInit {
   caption : string;
   user_all : User[];
   project_all : Project[];
-  parent_all : Parent[];
+  parent_all : Parent[] = [];
+  parents    : Parent[];
   errorCaption : string;
   selectedItem : User;
   selectedUser : User;
@@ -46,6 +47,7 @@ export class AddTaskComponent implements OnInit {
     this.task_item = new Task();
     this.task_item.Priority = 0;
     this.parent_item = new Parent();
+    
    }
 
   ngOnInit() {
@@ -88,21 +90,16 @@ export class AddTaskComponent implements OnInit {
   getparent()
   {
     this.parentservice.get().subscribe((obj) => {        
-      this.parent_all = obj;  
-     /*  this.parent_all.filter(myfilter =>{
-        if (myfilter.Project_Id === this.task_item.Project_Id)     
+      this.parents = obj;   
+      this.parents.forEach(element => { 
+        if (element.Project_Id === this.task_item.Project_Id) 
         {
-          return true;
-        }  
-        else
-        {
-          return false;
-        }                  
-      }); */
+          this.parent_all.push(element);
+        }
+      });   
     });
   }
   
-
   resettask()
   {
     this.task_item.Task_Id = null;
@@ -153,7 +150,7 @@ export class AddTaskComponent implements OnInit {
       this.resettask();
       this.resetparent();
       this.visible = this.setVisibility();
-      this.errorCaption = "Parent task added"
+      this.errorCaption = "Parent task sucessfully added"
     });
   }
 
@@ -177,8 +174,7 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  listClick(event, newValue) {
-    console.log(newValue);
+  listClick(event, newValue) {    
     this.selectedItem = newValue;     
   }
 
@@ -200,18 +196,12 @@ export class AddTaskComponent implements OnInit {
   }
 
   selectParent()
-  {
-    if (this.task_item.Project_Id === null)
-    {
-      this.errorCaption = "Please select a project";
-    }
-    else
-    {
-      this.selectedParent = this.navigateParent;
-      this.task_item.Parent_Id = this.selectedParent.Parent_Id;
-      this.task_item.ParentName = this.selectedParent.Parent_Task;
-      this.visible = this.setVisibility();
-    }
+  {   
+    this.selectedParent = this.navigateParent;
+    this.task_item.Parent_Id = this.selectedParent.Parent_Id;
+    this.task_item.ParentName = this.selectedParent.Parent_Task;
+    this.visible = this.setVisibility();
+  
   }
 
   listProjectClick(event, newValue) {    

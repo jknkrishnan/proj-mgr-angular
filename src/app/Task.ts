@@ -10,9 +10,9 @@ export class Task {
     Priority : number;
     Status : string;
     Project_Id : number;    
-    Project : Project;
+    Project : Project[];
     User_Id : number;
-    User : User;
+    User : User[];
     FullName : string;
     ProjectName : string;
     ParentName : string;

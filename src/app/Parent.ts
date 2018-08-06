@@ -4,6 +4,6 @@ export class Parent {
     Parent_Id : number;
     Parent_Task : string;
     Project_Id : number;
-    Project : Project;
+    Project : Project[];
 
 }

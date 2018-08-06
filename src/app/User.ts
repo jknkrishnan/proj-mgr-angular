@@ -5,6 +5,6 @@ export class User {
     First_Name : string;
     Last_Name : string;
     Employee_Id : number;
-    Project : Project;
-    Task : Task
+    Project : Project[];
+    Task : Task[];
 }

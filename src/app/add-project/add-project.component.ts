@@ -26,7 +26,7 @@ export class AddProjectComponent implements OnInit {
   errorCaption : string = "";  
   today : Date;
   dtStart : Date;
-  dtEnd : Date;   
+  dtEnd : Date;     
 
   @ViewChild('panel') public panel:ElementRef;
 
@@ -110,7 +110,17 @@ export class AddProjectComponent implements OnInit {
   get()
   {
     this.projservice.get().subscribe((obj) => {        
-      this.project_all = obj      
+      this.project_all = obj  
+      this.project_all.forEach(element => { 
+        if (element.Task != null)
+        {
+          element.taskcount = Object.keys(element.Task).length;          
+        }
+        else
+        {
+          element.taskcount = 0;          
+        }
+      });    
     });
   }
 
@@ -146,7 +156,15 @@ export class AddProjectComponent implements OnInit {
         this.project_item.FullName =  this.usr.First_Name + " " + this.usr.Last_Name; 
       });
       this.caption = "Update Project";
-      this.visible = this.setVisibility();            
+      this.visible = this.setVisibility();  
+      if (this.project_item.Task != null)
+      {
+        let count = 0        
+        this.project_item.Task.forEach(element => { 
+            count = count + 1;
+        });
+        this.project_item.taskcount = count;        
+      }
       if (flag === 'S')
       {
         this.project_item.Remarks = 'Suspended';

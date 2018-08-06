@@ -10,6 +10,7 @@ export class Project {
     Remarks : string;
     User_Id : number;    
     FullName : string;
-    Task : Task;
-    Parent : Parent;
+    Task : Task[];
+    Parent : Parent[];
+    taskcount : number;
 }
