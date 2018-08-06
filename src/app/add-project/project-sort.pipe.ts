@@ -4,6 +4,9 @@ import { Project } from '../Project';
   name: 'project_sort'
 })
 export class ProjectSortFilterPipe implements PipeTransform {
+    dt1  : Date;
+    dt2    : Date;
+
     transform(project : Project[], args: string): Project[]
     {           
              
@@ -23,11 +26,13 @@ export class ProjectSortFilterPipe implements PipeTransform {
         
         if ((args === 'Start_Date') && (project !== undefined))
         {          
-            project.sort((a: Project, b: Project) => {
-                if (a.Start_Date < b.Start_Date) {
+            project.sort((a: Project, b: Project) => {                
+                this.dt1 = new Date(a.Start_Date);
+                this.dt2 = new Date(b.Start_Date);
+                if (this.dt1 < this.dt2) {
                     return -1;
                 } 
-                else if (a.Start_Date > b.Start_Date) {
+                else if (this.dt1 > this.dt2) {
                     return 1;
                 } else {
                     return 0;
@@ -37,11 +42,13 @@ export class ProjectSortFilterPipe implements PipeTransform {
 
         if ((args === 'End_Date') && (project !== undefined))
         {          
-            project.sort((a: Project, b: Project) => {
-                if (a.End_Date < b.End_Date) {
+            project.sort((a: Project, b: Project) => {                
+                this.dt1 = new Date(a.End_Date);
+                this.dt2 = new Date(b.End_Date);
+                if (this.dt1 < this.dt2) {
                     return -1;
                 } 
-                else if (a.End_Date > b.End_Date) {
+                else if (this.dt1 > this.dt2) {
                     return 1;
                 } else {
                     return 0;

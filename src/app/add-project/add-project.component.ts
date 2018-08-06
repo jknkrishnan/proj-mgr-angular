@@ -112,6 +112,8 @@ export class AddProjectComponent implements OnInit {
     this.projservice.get().subscribe((obj) => {        
       this.project_all = obj  
       this.project_all.forEach(element => { 
+        element.Start_Date = moment(element.Start_Date).format('YYYY-MM-DD'); 
+        element.End_Date = moment(element.End_Date).format('YYYY-MM-DD');
         if (element.Task != null)
         {
           element.taskcount = Object.keys(element.Task).length;          
