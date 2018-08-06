@@ -67,8 +67,7 @@ export class AddTaskComponent implements OnInit {
       this.resetparent();
       this.getuser();
       this.getproject();               
-      this.gettask(this.task_id);
-      this.getparent();
+      this.gettask(this.task_id);      
       this.caption = "Update Task";
       this.editTask = true;
     }
@@ -86,7 +85,8 @@ export class AddTaskComponent implements OnInit {
   gettask(task_id : number)
   {
     this.taskservice.getById(task_id).subscribe((obj) => { 
-      this.task_item = obj[0];     
+      this.task_item = obj[0];  
+      this.getparent();   
       this.task_item.StartDate = moment(this.task_item.StartDate).format('YYYY-MM-DD');
       this.task_item.EndDate   = moment(this.task_item.EndDate).format('YYYY-MM-DD'); 
       this.userservice.getById(this.task_item.User_Id).subscribe((obj) => {        
@@ -132,8 +132,8 @@ export class AddTaskComponent implements OnInit {
   }
 
   getparent()
-  {
-      this.parentservice.get().subscribe((obj) => {                        
+  {    
+    this.parentservice.get().subscribe((obj) => {                        
         this.parents = obj;
         this.parents.forEach(element => { 
           if (element.Project_Id === this.task_item.Project_Id) 
@@ -272,8 +272,7 @@ export class AddTaskComponent implements OnInit {
     this.task_item.Parent_Id = this.selectedParent.Parent_Id;
     this.task_item.ParentName = this.selectedParent.Parent_Task;
     this.getparent();
-    this.visible = this.setVisibility();
-  
+    this.visible = this.setVisibility();  
   }
 
   listProjectClick(event, newValue) {    
