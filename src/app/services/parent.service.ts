@@ -29,12 +29,7 @@ export class ParentService {
   getById(id : number): Observable<Parent[]>
   {
     return this._http.get<any>(environment.url+"Parent/"+id).catch(this.handleError);
-  }
-
-  getbyProject(id : number): Observable<Parent[]>
-  {
-    return null;
-  }
+  } 
   
   post(item : Parent) : Observable<Parent>
   {    

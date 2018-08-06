@@ -11,7 +11,8 @@
                         <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" 
                         disabled [(ngModel)]="task_item.ProjectName" />
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myProject">Search</button>
+                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myProject"
+                            [disabled]="editTask">Search</button>
                         </span>
                     </div>
                 </div>
@@ -32,7 +33,7 @@
                 <div class="cols-sm-4">
                     <span class="custom-checkbox">
                         <input type="checkbox" id="checkbox1" name="options[]" value="1" 
-                        [(ngModel)]="str_check" (change)="parentchange()">
+                        [(ngModel)]="str_check" (change)="parentchange()" [disabled]="editTask">
                         <label for="checkbox1">Parent Task</label>
                     </span>
                 </div>
@@ -136,7 +137,7 @@
           </div>
           <div class="modal-footer">
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-            <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectUser()">
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK" (click)="selectUser()">
           </div>    
       </div>
     </div>
@@ -160,7 +161,7 @@
           </div>
           <div class="modal-footer">
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-            <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectProject()">
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK" (click)="selectProject()">
           </div>    
       </div>
     </div>
@@ -184,7 +185,7 @@
           </div>
           <div class="modal-footer">
             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-            <input type="submit" class="btn btn-info" data-dismiss="modal" value="Save" (click)="selectParent()">
+            <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK" (click)="selectParent()">
           </div>    
       </div>
     </div>

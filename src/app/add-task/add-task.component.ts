@@ -9,6 +9,7 @@ import { ProjectService } from '../services/project.service';
 import { ParentService } from '../services/parent.service';
 import { TaskService } from '../services/task.service';
 import * as moment from 'moment';
+import { ActivatedRoute,Params } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -35,6 +36,8 @@ export class AddTaskComponent implements OnInit {
   str_check : boolean;
   dtStart : Date;
   dtEnd : Date;
+  editTask : boolean;
+  task_id : number;  
   
   @ViewChild('panel') public panel:ElementRef;
 
@@ -43,20 +46,61 @@ export class AddTaskComponent implements OnInit {
     this.visible = this.setVisibility();
   }
   constructor(private userservice : UserService, private projservice : ProjectService, 
-              private taskservice : TaskService, private parentservice : ParentService) {
+              private taskservice : TaskService, private parentservice : ParentService,
+              private route : ActivatedRoute) {
     this.task_item = new Task();
     this.task_item.Priority = 0;
-    this.parent_item = new Parent();
+    this.parent_item = new Parent();    
     
    }
 
   ngOnInit() {
-    this.getuser();
-    this.getproject();       
-    this.caption = "Add Task";
-    this.resettask();
-    this.resetparent();
+    
+    this.route.params.subscribe(
+      (params : Params) => {
+        this.task_id  = params['id'];        
+      }
+    );
+    if (this.task_id > 0) 
+    {      
+      this.resettask();
+      this.resetparent();
+      this.getuser();
+      this.getproject();               
+      this.gettask(this.task_id);
+      this.getparent();
+      this.caption = "Update Task";
+      this.editTask = true;
+    }
+    else
+    {     
+      this.getuser();
+      this.getproject();             
+      this.resettask();
+      this.resetparent();
+      this.caption = "Add Task";   
+      this.editTask = false;   
+    }
   }
+
+  gettask(task_id : number)
+  {
+    this.taskservice.getById(task_id).subscribe((obj) => { 
+      this.task_item = obj[0];     
+      this.task_item.StartDate = moment(this.task_item.StartDate).format('YYYY-MM-DD');
+      this.task_item.EndDate   = moment(this.task_item.EndDate).format('YYYY-MM-DD'); 
+      this.userservice.getById(this.task_item.User_Id).subscribe((obj) => {        
+        this.task_item.FullName =  obj[0].First_Name + " " + obj[0].Last_Name; 
+      });
+      this.projservice.getById(this.task_item.Project_Id).subscribe((obj) => {
+        this.task_item.ProjectName = obj[0].Project_Name;
+      });
+      this.parentservice.getById(this.task_item.Parent_Id).subscribe((obj) => {
+        this.task_item.ParentName = obj[0].Parent_Task;
+      });        
+    });
+  }
+
 
   setVisibility() : boolean
   {
@@ -89,15 +133,15 @@ export class AddTaskComponent implements OnInit {
 
   getparent()
   {
-    this.parentservice.get().subscribe((obj) => {        
-      this.parents = obj;   
-      this.parents.forEach(element => { 
-        if (element.Project_Id === this.task_item.Project_Id) 
-        {
-          this.parent_all.push(element);
-        }
-      });   
-    });
+      this.parentservice.get().subscribe((obj) => {                        
+        this.parents = obj;
+        this.parents.forEach(element => { 
+          if (element.Project_Id === this.task_item.Project_Id) 
+          {
+            this.parent_all.push(element);
+          }
+        });   
+      });      
   }
   
   resettask()
@@ -120,6 +164,7 @@ export class AddTaskComponent implements OnInit {
     this.visible = this.setVisibility();
     this.caption = "Add Task"; 
     this.errorCaption = "";
+    this.editTask = false;
   }
   
   resetparent()
@@ -135,10 +180,35 @@ export class AddTaskComponent implements OnInit {
     {
       this.addparent();
     }
+    else if (this.task_item.Task_Id > 0)
+    {
+      this.updatetask();      
+    }
     else
     {
       this.addtask();
     }
+  }
+
+  updatetask()
+  {
+    this.dtStart = new Date(this.task_item.StartDate);
+    this.dtEnd = new Date(this.task_item.EndDate);
+    if (this.dtStart> this.dtEnd)
+    {      
+        this.errorCaption = "Project start date is greater than end date"; 
+        return;
+    }
+    else
+    {
+        this.taskservice.put(this.task_item.Task_Id,this.task_item).subscribe((obj) => {                
+          //this.resettask();
+          //this.resetparent();
+          this.visible = this.setVisibility();
+          this.errorCaption = "Task updated"
+        }); 
+    }
+
   }
 
   addparent()
@@ -165,7 +235,8 @@ export class AddTaskComponent implements OnInit {
     }
     else
     {
-        this.taskservice.post(this.task_item).subscribe((obj) => {                
+      this.task_item.Status = "Open";
+      this.taskservice.post(this.task_item).subscribe((obj) => {                
           this.resettask();
           this.resetparent();
           this.visible = this.setVisibility();
@@ -200,6 +271,7 @@ export class AddTaskComponent implements OnInit {
     this.selectedParent = this.navigateParent;
     this.task_item.Parent_Id = this.selectedParent.Parent_Id;
     this.task_item.ParentName = this.selectedParent.Parent_Task;
+    this.getparent();
     this.visible = this.setVisibility();
   
   }

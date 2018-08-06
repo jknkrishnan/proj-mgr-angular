@@ -10,20 +10,21 @@
         <span class="input-group-addon">
           <i class="fa fa-user fa" aria-hidden="true"></i>
         </span>
-        <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" disabled />
+        <input type="text" class="form-control" name="project" id="project" placeholder="Enter project Name" disabled
+        [(ngModel)]="projectname"/>
         <span class="input-group-btn">
-          <button class="btn btn-primary" type="button">Search</button>
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myProject">Search</button>
         </span>
       </div>
     </div>
     <div class="col-sm-6">
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" (click)="sort('C')">
         <i class="material-icons">&#xE042;</i>Completed</button>
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" (click)="sort('P')">
         <i class="material-icons">&#xE042;</i>Priority</button>
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" (click)="sort('E')">
         <i class="material-icons">&#xE042;</i>End Date</button>
-      <button type="button" class="btn btn-primary btn-sm">
+      <button type="button" class="btn btn-primary btn-sm" (click)="sort('S')">
         <i class="material-icons">&#xE042;</i>Start Date</button>
       <h5>
         <b>Sort Tasks By:</b>
@@ -62,58 +63,50 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let task of projecttasks|task_sort:sortCaption">
         <td>
           <span class="custom-checkbox">
             <input type="checkbox" id="checkbox1" name="options[]" value="1">
             <label for="checkbox1"></label>
           </span>
         </td>
-        <td>abc</td>
-        <td>def</td>
-        <td>10</td>
-        <td>01/01/2018</td>
-        <td>01/01/2018</td>
+        <td>{{task.TaskDesc}}</td>
+        <td>{{task.ParentName}}</td>
+        <td>{{task.Priority}}</td>
+        <td>{{task.StartDate}}</td>
+        <td>{{task.EndDate}}</td>
         <td>
-          <a href="#editEmployeeModal" class="edit" data-toggle="modal">
-            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-          </a>
+          <button type="button" class="btn btn-info btn-sm" style="margin-left: 10px" routerLink="/addtask/{{ task.Task_Id }}">Edit</button>          
         </td>
         <td>
-          <a href="#endEmployeeModal" class="end" data-toggle="modal">
-            <i class="material-icons" data-toggle="tooltip" title="End">&#xE872;</i>
-          </a>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-left: 10px" (click)="endtask(task.Task_Id)" >End</button>         
         </td>
       </tr>
     </tbody>
   </table>
   <hr style="width: 100%; color: black; height: 1px; border: 1px dotted;" />
 </div>
-<div class="clearfix">
-  <div class="hint-text">Showing
-    <b>1</b> out of
-    <b>10</b> entries</div>
-  <ul class="pagination">
-    <li class="page-item disabled">
-      <a href="#">Previous</a>
-    </li>
-    <li class="page-item active">
-      <a href="#" class="page-link">1</a>
-    </li>
-    <li class="page-item">
-      <a href="#" class="page-link">2</a>
-    </li>
-    <li class="page-item">
-      <a href="#" class="page-link">3</a>
-    </li>
-    <li class="page-item">
-      <a href="#" class="page-link">4</a>
-    </li>
-    <li class="page-item">
-      <a href="#" class="page-link">5</a>
-    </li>
-    <li class="page-item">
-      <a href="#" class="page-link">Next</a>
-    </li>
-  </ul>
+<div id="myProject" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">      
+        <div class="modal-header">
+          <h4 class="modal-title">Search Project</h4>
+          <br/>
+          <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" />
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <ul id="grouplist" class="list-group" *ngFor="let item of project_all|proj_filter:searchText">
+              <li class="list-group-item" [ngClass]="{'active': navigateProj == item}" (click)="listProjectClick($event, item)">
+                {{item.Project_Name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+          <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK" (click)="selectProject()">
+        </div>    
+    </div>
+  </div>
 </div>
