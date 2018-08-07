@@ -134,7 +134,8 @@ export class AddTaskComponent implements OnInit {
   getparent()
   {    
     this.parentservice.get().subscribe((obj) => {                        
-        this.parents = obj;
+        this.parents = obj;  
+        this.parent_all = [];      
         this.parents.forEach(element => { 
           if (element.Project_Id === this.task_item.Project_Id) 
           {

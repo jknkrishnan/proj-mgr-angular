@@ -15,7 +15,8 @@ export class AddUserComponent implements OnInit {
   visible : boolean = false;
   caption : string = "Add User";
   sortCaption : string = "First_Name";
-
+  errorCaption : string;
+  
   @ViewChild('panel') public panel:ElementRef;
 
   @HostListener("input") input(eventdata : Event)
@@ -62,8 +63,7 @@ export class AddUserComponent implements OnInit {
 
   getuser(record : number)
   {
-    this.userservice.getById(record).subscribe((obj) => {  
-      console.log(obj);     
+    this.userservice.getById(record).subscribe((obj) => {         
       this.user_item = obj[0];
       this.caption = "Update User";
       this.visible = this.setVisibility();
@@ -101,13 +101,24 @@ export class AddUserComponent implements OnInit {
 
   deleteuser(record : number)
   {
-    this.userservice.delete(record).subscribe((obj) => {  
-      console.log(obj);  
-      this.get();
-      this.resetuser();
-      this.visible = this.setVisibility();
-      this.moveToSpecificView();
-    });
+    this.userservice.getById(record).subscribe((obj) => {         
+      this.user_item = obj[0];      
+      if (((obj[0].Task != null) && (Object.keys(obj[0].Task).length > 0)) || 
+          ((obj[0].Project != null) && (Object.keys(obj[0].Project).length > 0) ))
+      {
+        alert("Task/Project exist for selected user. User cannot not be deleted");           
+        return;
+      }
+      else
+      {
+        this.userservice.delete(record).subscribe((obj) => {        
+          this.get();
+          this.resetuser();
+          this.visible = this.setVisibility();
+          this.moveToSpecificView();
+        });
+      }
+    });    
   }
   
   sort(str :string)

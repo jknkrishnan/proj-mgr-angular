@@ -17,6 +17,10 @@ import {ProjectFilterPipe} from './add-project/project-filter.pipe';
 import {ProjectSortFilterPipe} from './add-project/project-sort.pipe';
 import {ParentFilterPipe} from './add-task/parent-filter.pipe';
 import {TaskSortFilterPipe} from './view-task/task-sort.pipe';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { MatCardModule } from '@angular/material/card'
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTableModule} from '@angular/material/table';
 
 const appRoute : Routes = [
   { path:'adduser', component:AddUserComponent}, 
@@ -39,13 +43,17 @@ const appRoute : Routes = [
     ProjectFilterPipe,
     ProjectSortFilterPipe,
     ParentFilterPipe,
-    TaskSortFilterPipe    
+    TaskSortFilterPipe,
+    MessageDialogComponent    
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule, 
     BrowserModule,
-    HttpClientModule,
+    HttpClientModule, 
+    MatCardModule,   
+    MatToolbarModule,
+    MatTableModule,
     RouterModule.forRoot(appRoute)
   ],
   providers: [],

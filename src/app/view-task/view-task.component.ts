@@ -37,6 +37,7 @@ export class ViewTaskComponent implements OnInit {
   {
     this.taskservice.get().subscribe((obj) => {        
       this.task_all = obj
+      this.projecttasks = [];
       this.task_all.forEach(element => { 
         
         this.parentservice.getById(element.Parent_Id).subscribe((obj) => {  
