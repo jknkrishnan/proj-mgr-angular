@@ -84,7 +84,7 @@
     </div>
   </div>
 </div>
-<p class="text-danger">{{errorCaption}}</p>
+<!-- <p class="text-danger">{{errorCaption}}</p> -->
 <!-- <hr style="width: 100%; color: black; height: 1px; background-color:black;" /> -->
 <div class="row col-sm-12">
   <div class="col-sm-6">
@@ -178,5 +178,23 @@
           <input type="submit" class="btn btn-info" data-dismiss="modal" value="OK" (click)="selectUser()">
         </div>    
     </div>
+  </div>
+</div>
+<div id="messageModal" class="modal fade">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <form>
+              <div class="modal-header">
+                  <h4 class="modal-title">Task</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              </div>
+              <div class="modal-body">
+                  <p class="text-danger">{{errorCaption}}</p>
+              </div>
+              <div class="modal-footer">
+                  <input type="button" class="btn btn-warning" data-dismiss="modal" value="OK">
+              </div>
+          </form>
+      </div>
   </div>
 </div>

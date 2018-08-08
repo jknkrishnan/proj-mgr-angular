@@ -6,12 +6,16 @@ import { Parent } from '../Parent';
 import { Project } from '../Project';
 import { ProjectService } from '../services/project.service';
 import * as moment from 'moment';
+import {Router} from "@angular/router";
+
+declare var $;
 
 @Component({
   selector: 'app-view-task',
   templateUrl: './view-task.component.html',
   styleUrls: ['./view-task.component.css']
 })
+
 export class ViewTaskComponent implements OnInit {
 
   task_all : Task[];
@@ -24,10 +28,12 @@ export class ViewTaskComponent implements OnInit {
   projectname : string;
   task_item : Task;
   sortCaption : string;
+  messageCaption : string;
   
   constructor(private taskservice : TaskService, 
               private parentservice : ParentService,
-              private projectservice : ProjectService) { }
+              private projectservice : ProjectService,
+              private router: Router) { }
 
   ngOnInit() {
     this.getprojects();    
@@ -84,11 +90,35 @@ export class ViewTaskComponent implements OnInit {
   {
     this.taskservice.getById(task_id).subscribe((obj) => { 
       this.task_item = obj[0];    
-      this.task_item.Status = "Closed";
-      this.taskservice.put(task_id,this.task_item).subscribe((obj) => {});  
+      if (this.task_item.Status != "Closed")
+      {
+        this.task_item.Status = "Closed";
+        this.taskservice.put(task_id,this.task_item).subscribe((obj) => {});  
+        this.messageCaption = "Task ended sucessfully"
+      }
+      else
+      {
+        this.messageCaption = "This task has been already ended"
+      }      
+      $('#messageModal').modal('show'); 
     });    
   }
 
+  edittask(task_id:number)
+  {
+    this.taskservice.getById(task_id).subscribe((obj) => { 
+      this.task_item = obj[0];    
+      if (this.task_item.Status != "Closed")
+      {
+        this.messageCaption = "You cannnot edit task. Task has been ended";
+        $('#messageModal').modal('show'); 
+      }
+      else
+      {
+        this.router.navigate(['/addtask/'+task_id]);
+      }
+    });    
+  }
 
   sort(str :string)
   {    

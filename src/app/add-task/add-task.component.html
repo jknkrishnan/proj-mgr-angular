@@ -117,7 +117,7 @@
         </div>
     </div>
 </div> 
-<p class="text-danger">{{errorCaption}}</p>        
+<!-- <p class="text-danger">{{errorCaption}}</p>         -->
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">      
@@ -189,5 +189,23 @@
           </div>    
       </div>
     </div>
-  </div>
+</div>
+<div id="messageModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Task</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger">{{errorCaption}}</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-warning" data-dismiss="modal" value="OK">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 

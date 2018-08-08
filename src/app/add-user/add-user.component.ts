@@ -3,6 +3,8 @@ import { User } from '../User';
 import {Router} from  '@angular/router';
 import { UserService } from '../services/user.service';
 
+declare var $;
+
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -17,6 +19,8 @@ export class AddUserComponent implements OnInit {
   sortCaption : string = "First_Name";
   errorCaption : string;
   
+  @ViewChild('messageModal') messageModal:ElementRef;
+
   @ViewChild('panel') public panel:ElementRef;
 
   @HostListener("input") input(eventdata : Event)
@@ -105,8 +109,8 @@ export class AddUserComponent implements OnInit {
       this.user_item = obj[0];      
       if (((obj[0].Task != null) && (Object.keys(obj[0].Task).length > 0)) || 
           ((obj[0].Project != null) && (Object.keys(obj[0].Project).length > 0) ))
-      {
-        alert("Task/Project exist for selected user. User cannot not be deleted");           
+      { 
+        $('#messageModal').modal('show'); 
         return;
       }
       else

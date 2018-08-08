@@ -6,6 +6,8 @@ import { UserService } from '../services/user.service';
 import { ProjectService } from '../services/project.service';
 import * as moment from 'moment';
 
+declare var $;
+
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
@@ -92,6 +94,7 @@ export class AddProjectComponent implements OnInit {
     if ((this.str_check) && (this.dtStart> this.dtEnd))
     {      
       this.errorCaption = "Project start date is greater than end date"; 
+      $('#messageModal').modal('show'); 
       return;          
     }
     this.project_item.Remarks = 'No';

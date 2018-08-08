@@ -11,6 +11,8 @@ import { TaskService } from '../services/task.service';
 import * as moment from 'moment';
 import { ActivatedRoute,Params } from '@angular/router';
 
+declare var $;
+
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -198,15 +200,15 @@ export class AddTaskComponent implements OnInit {
     if (this.dtStart> this.dtEnd)
     {      
         this.errorCaption = "Project start date is greater than end date"; 
+        $('#messageModal').modal('show'); 
         return;
     }
     else
     {
-        this.taskservice.put(this.task_item.Task_Id,this.task_item).subscribe((obj) => {                
-          //this.resettask();
-          //this.resetparent();
+        this.taskservice.put(this.task_item.Task_Id,this.task_item).subscribe((obj) => {                          
           this.visible = this.setVisibility();
-          this.errorCaption = "Task updated"
+          this.errorCaption = "Task updated sucessfully"
+          $('#messageModal').modal('show'); 
         }); 
     }
 
@@ -222,6 +224,7 @@ export class AddTaskComponent implements OnInit {
       this.resetparent();
       this.visible = this.setVisibility();
       this.errorCaption = "Parent task sucessfully added"
+      $('#messageModal').modal('show'); 
     });
   }
 
@@ -232,6 +235,7 @@ export class AddTaskComponent implements OnInit {
     if (this.dtStart> this.dtEnd)
     {      
         this.errorCaption = "Project start date is greater than end date"; 
+        $('#messageModal').modal('show'); 
         return;
     }
     else
@@ -241,7 +245,8 @@ export class AddTaskComponent implements OnInit {
           this.resettask();
           this.resetparent();
           this.visible = this.setVisibility();
-          this.errorCaption = "Task added"
+          this.errorCaption = "Task sucessfully added"
+          $('#messageModal').modal('show'); 
         }); 
     }
   }
