@@ -58,5 +58,24 @@ describe('AddUserComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });  
+  });
+  
+  it('reset user', () => {
+    component.resetuser();
+    expect(component.user_item.User_Id).toBeNull;
+    expect(component.user_item.Last_Name).toBeNull;
+    expect(component.user_item.First_Name).toBeNull;
+    expect(component.user_item.Employee_Id).toBeNull;
+  }); 
+
+  it('get user', () => {         
+    component.get();
+    expect(userService.get).toHaveBeenCalledWith();
+  });   
+
+  it('get user by id', () => {         
+    component.getuser(1);
+    expect(userService.get).toHaveBeenCalledWith();
+  });   
+
 });
