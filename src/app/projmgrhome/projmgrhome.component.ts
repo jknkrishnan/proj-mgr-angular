@@ -9,10 +9,11 @@ import {Router} from  '@angular/router';
 export class ProjmgrhomeComponent implements OnInit {
 
   constructor(private homerouter : Router) { 
-    homerouter.navigate(['viewtask']);
+    
   }
 
   ngOnInit() {
+    //this.homerouter.navigate(['viewtask']);
   }
 
 }

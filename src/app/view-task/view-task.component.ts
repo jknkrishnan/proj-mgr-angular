@@ -108,7 +108,7 @@ export class ViewTaskComponent implements OnInit {
   {
     this.taskservice.getById(task_id).subscribe((obj) => { 
       this.task_item = obj[0];    
-      if (this.task_item.Status != "Closed")
+      if (this.task_item.Status === "Closed")
       {
         this.messageCaption = "You cannnot edit task. Task has been ended";
         $('#messageModal').modal('show'); 

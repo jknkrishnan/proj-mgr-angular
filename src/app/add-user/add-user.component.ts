@@ -144,7 +144,7 @@ export class AddUserComponent implements OnInit {
 
   }
 
-  public moveToSpecificView(): void {
+  moveToSpecificView(): void {
     setTimeout(() => {
         this.panel.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'start' });
     });
