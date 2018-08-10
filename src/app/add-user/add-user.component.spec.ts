@@ -19,6 +19,7 @@ describe('AddUserComponent', () => {
   let component: AddUserComponent;
   let userService: UserService;
   let fixture: ComponentFixture<AddUserComponent>;
+  let spy: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,6 +45,9 @@ describe('AddUserComponent', () => {
     component = TestBed.createComponent(AddUserComponent).componentInstance;
     userService = TestBed.get(UserService);    
     spyOn(userService, 'get').and.callThrough();
+    spyOn(userService, 'post').and.callThrough();
+    spyOn(userService, 'put').and.callThrough();
+    spyOn(userService, 'delete').and.callThrough();
   }));
 
   beforeEach(() => {
@@ -54,11 +58,5 @@ describe('AddUserComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-   it('test get service is called', () => {
-    component.ngOnInit();
-    expect(userService.get).toHaveBeenCalled();
   });  
-  
 });
