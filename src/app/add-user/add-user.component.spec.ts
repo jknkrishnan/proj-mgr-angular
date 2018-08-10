@@ -68,14 +68,25 @@ describe('AddUserComponent', () => {
     expect(component.user_item.Employee_Id).toBeNull;
   }); 
 
-  it('get user', () => {         
+  it('get user', () => {
+    /* const myservice = fixture.debugElement.injector.get(UserService);
+    spyOn(myservice, 'get').and.callThrough();
+    component.get();
+    expect(myservice.get).toHaveBeenCalledWith(); */      
     component.get();
     expect(userService.get).toHaveBeenCalledWith();
   });   
 
-  it('get user by id', () => {         
-    component.getuser(1);
-    expect(userService.get).toHaveBeenCalledWith();
-  });   
+  it('add user', () => {
+    
+  });  
+
+  it('update user', () => {
+    
+  });  
+
+  it('delete user', () => {
+    
+  });  
 
 });

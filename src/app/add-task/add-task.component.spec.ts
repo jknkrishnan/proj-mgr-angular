@@ -24,19 +24,19 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 import * as moment from 'moment';
 
+const TASK_OBJECT : Task = new Task();
+
+
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
-  let user_service : MockUserService
+  let task_service : TaskService;
+  let user_service : UserService;
+  let project_service : ProjectService;
+  let parent_service : ParentService;
   let fixture: ComponentFixture<AddTaskComponent>;
   let spy: any;
 
-  class MockUserService extends UserService {
-    authenticated = false;
   
-    isAuthenticated() {
-      return this.authenticated;
-    }
-  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -60,6 +60,23 @@ describe('AddTaskComponent', () => {
       ]
     })
     .compileComponents();
+    component = TestBed.createComponent(AddTaskComponent).componentInstance;
+    task_service = TestBed.get(TaskService);    
+    user_service = TestBed.get(UserService);   
+    project_service =  TestBed.get(ProjectService);   
+    parent_service =  TestBed.get(ParentService);   
+    
+    spyOn(task_service, 'get').and.callThrough();
+
+    spyOn(task_service, 'post').and.callThrough();
+    spyOn(task_service, 'put').and.callThrough();
+    spyOn(task_service, 'delete').and.callThrough();
+
+    spyOn(user_service, 'get').and.callThrough();
+
+    spyOn(project_service, 'get').and.callThrough();
+
+    spyOn(parent_service, 'get').and.callThrough();
   }));
 
   beforeEach(() => {
@@ -96,5 +113,32 @@ describe('AddTaskComponent', () => {
     component.resetparent();    
     expect(component.parent_item.Parent_Id).toBeNull;
   }); 
+
+  it('get user', () => {    
+    component.getuser();
+    expect(user_service.get).toHaveBeenCalledWith();
+  });  
+
+  it('get project', () => {    
+    component.getproject();
+    expect(project_service.get).toHaveBeenCalledWith();
+  });
+
+  it('get parent', () => {    
+    component.getparent();
+    expect(parent_service.get).toHaveBeenCalledWith();
+  }); 
+
+  it('get task by id', () => {        
+  });
+
+  it('add task', () => {        
+  });
+
+  it('update task', () => {        
+  });
+
+  it('delete task', () => {        
+  });
 
 });
