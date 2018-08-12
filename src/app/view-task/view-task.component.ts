@@ -63,10 +63,7 @@ export class ViewTaskComponent implements OnInit {
     });
   }
 
-  getparent()
-  {
-  }
-
+ 
   getprojects()
   {
     this.projectservice.get().subscribe((obj) => {        
@@ -119,7 +116,8 @@ export class ViewTaskComponent implements OnInit {
       }
     });    
   }
-
+  
+  
   sort(str :string)
   {    
     if (str==='S')

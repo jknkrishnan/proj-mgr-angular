@@ -27,6 +27,9 @@ import {MatTableModule} from '@angular/material/table';
 describe('ViewTaskComponent', () => {
   let component: ViewTaskComponent;
   let fixture: ComponentFixture<ViewTaskComponent>;
+  let task_service : TaskService;  
+  let project_service : ProjectService;
+  let parent_service :ParentService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -49,6 +52,13 @@ describe('ViewTaskComponent', () => {
       ]
     })
     .compileComponents();
+    task_service = TestBed.get(TaskService);        
+    project_service =  TestBed.get(ProjectService);   
+    parent_service =  TestBed.get(ParentService);   
+
+    spyOn(task_service, 'get').and.callThrough();
+    spyOn(project_service, 'get').and.callThrough();
+    spyOn(parent_service, 'get').and.callThrough();
   }));
 
   beforeEach(() => {
@@ -59,5 +69,58 @@ describe('ViewTaskComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('get project', () => {    
+    component.getprojects();
+    expect(project_service.get).toHaveBeenCalledWith();    
+  });  
+
+  it('get ngoninit', () => {    
+    component.project_all = [];
+    component.ngOnInit();
+    expect(component.project_all).toBeDefined();
+    
+  }); 
+
+  it('get task', () => {    
+    component.gettask(1);    
+    expect(task_service.get).toHaveBeenCalledWith();
+  });  
+
+  it('select project', () => {   
+    component.selectedProject = new Project(); 
+    component.navigateProj = new Project(); 
+    component.selectProject();
+    expect(component.selectedProject).toBeDefined;
+    expect(component.navigateProj).toBeDefined;
+  });
+
+  it('sort StartDate', () => {
+    component.sort('S');
+    expect(component.sortCaption).toMatch('StartDate');
+  });
+
+  it('sort EndDate', () => {
+    component.sort('E');
+    expect(component.sortCaption).toMatch('EndDate');
+  });
+
+  it('sort Priority', () => {
+    component.sort('P');
+    expect(component.sortCaption).toMatch('Priority');
+  });
+
+  it('sort Status', () => {
+    component.sort('C');
+    expect(component.sortCaption).toMatch('Status');
+  });
+
+  it('end task', () => {
+    
+  });
+
+  it('edit task', () => {
+    
   });
 });

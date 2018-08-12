@@ -13,13 +13,18 @@ import { MatCardModule } from '@angular/material/card'
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 
-const USER_OBJECT: User = new User();
+
+
 
 describe('AddUserComponent', () => {
   let component: AddUserComponent;
   let userService: UserService;
   let fixture: ComponentFixture<AddUserComponent>;
   let spy: any;
+  let usr: [{ First_Name: 'JK', Last_Name: 'J', Employee_Id : 166300, User_Id : 1 }];
+  const UserObject : User = new User()
+
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -45,7 +50,7 @@ describe('AddUserComponent', () => {
     component = TestBed.createComponent(AddUserComponent).componentInstance;
     userService = TestBed.get(UserService);    
     spyOn(userService, 'get').and.callThrough();
-    spyOn(userService, 'post').and.callThrough();
+    spyOn(userService, 'post');    
     spyOn(userService, 'put').and.callThrough();
     spyOn(userService, 'delete').and.callThrough();
   }));
@@ -68,17 +73,24 @@ describe('AddUserComponent', () => {
     expect(component.user_item.Employee_Id).toBeNull;
   }); 
 
-  it('get user', () => {
-    /* const myservice = fixture.debugElement.injector.get(UserService);
-    spyOn(myservice, 'get').and.callThrough();
-    component.get();
-    expect(myservice.get).toHaveBeenCalledWith(); */      
+  it('get user', () => {    
     component.get();
     expect(userService.get).toHaveBeenCalledWith();
   });   
 
+  it('test ngonit', () => {    
+    component.ngOnInit();
+    expect(component.caption).toMatch('Add User');
+  });  
+
+  it('test add user button visibility false', () => {    
+    component.user_item =  new User();         ;
+    component.setVisibility()
+    expect(component.setVisibility()).toEqual(false);
+  });  
+
   it('add user', () => {
-    
+    //component.adduser();    
   });  
 
   it('update user', () => {
@@ -89,4 +101,27 @@ describe('AddUserComponent', () => {
     
   });  
 
+  it('get user by id', () => {
+    
+  }); 
+
+  it('submit user', () => {
+    
+  }); 
+
+  it('sort user F', () => {
+    component.sort('F');
+    expect(component.sortCaption).toMatch('First_Name');
+  }); 
+
+  it('sort user L', () => {
+    component.sort('L');
+    expect(component.sortCaption).toMatch('Last_Name');
+  });
+
+  it('sort user E', () => {
+    component.sort('E');
+    expect(component.sortCaption).toMatch('Employee_Id');
+  });   
 });
+

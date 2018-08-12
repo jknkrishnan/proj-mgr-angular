@@ -138,7 +138,42 @@ describe('AddTaskComponent', () => {
   it('update task', () => {        
   });
 
-  it('delete task', () => {        
+  it('add parent task', () => {        
   });
 
+  it('delete task', () => {        
+  });
+  
+  it('test add user button visibility false', () => {    
+    component.task_item =  new Task();     
+    component.setVisibility()
+    expect(component.setVisibility()).toEqual(false);
+  });  
+  
+  it('test ngonit', () => {    
+    component.ngOnInit();
+    expect(component.caption).toMatch('Add Task');
+  }); 
+
+  it('select user', () => {   
+    component.selectedItem = new User(); 
+    component.selectUser();
+    expect(component.selectedItem).toBeDefined;
+  });
+
+  it('select project', () => {   
+    component.selectedProject = new Project(); 
+    component.navigateProj = new Project(); 
+    component.selectProject();
+    expect(component.selectedProject).toBeDefined;
+    expect(component.navigateProj).toBeDefined;
+  });
+
+  it('select parent', () => {   
+    component.selectedParent = new Parent(); 
+    component.navigateParent = new Parent(); 
+    component.selectParent();
+    expect(component.selectedParent).toBeDefined;
+    expect(component.navigateParent).toBeDefined;
+  });
 });
