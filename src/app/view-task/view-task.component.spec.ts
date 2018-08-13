@@ -114,13 +114,5 @@ describe('ViewTaskComponent', () => {
   it('sort Status', () => {
     component.sort('C');
     expect(component.sortCaption).toMatch('Status');
-  });
-
-  it('end task', () => {
-    
-  });
-
-  it('edit task', () => {
-    
-  });
+  });  
 });

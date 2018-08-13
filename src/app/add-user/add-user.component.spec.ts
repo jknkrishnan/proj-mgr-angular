@@ -13,17 +13,37 @@ import { MatCardModule } from '@angular/material/card'
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
 
-
+import { fakeService, Interceptor } from '../services-test/interceptor';
+import {of} from 'rxjs';
+import { userInfo } from 'os';
 
 
 describe('AddUserComponent', () => {
   let component: AddUserComponent;
   let userService: UserService;
   let fixture: ComponentFixture<AddUserComponent>;
-  let spy: any;
-  let usr: [{ First_Name: 'JK', Last_Name: 'J', Employee_Id : 166300, User_Id : 1 }];
-  const UserObject : User = new User()
+  let spy: any;  
+  const UserObject : User = new User()  
 
+  class MockPostService extends UserService {
+   
+    post(item : User) : Observable<User>
+    {    
+      return Observable.of(UserObject);
+    }    
+
+    put(id : number, item : User) : Observable<User>
+    {    
+      return Observable.of(UserObject);
+    }  
+
+    delete(id : number) : Observable<User>
+    {    
+      return Observable.of(UserObject);
+    }     
+  }
+
+  let mockservice : MockPostService;
 
 
   beforeEach(async(() => {
@@ -40,19 +60,16 @@ describe('AddUserComponent', () => {
         HttpClientModule,
         MatCardModule,   
         MatToolbarModule,
-        MatTableModule,
+        MatTableModule
       ],
-      providers: [
-        UserService
+      providers: [        
+        MockPostService
       ]
     })
     .compileComponents();
     component = TestBed.createComponent(AddUserComponent).componentInstance;
-    userService = TestBed.get(UserService);    
-    spyOn(userService, 'get').and.callThrough();
-    spyOn(userService, 'post');    
-    spyOn(userService, 'put').and.callThrough();
-    spyOn(userService, 'delete').and.callThrough();
+    userService = TestBed.get(MockPostService);    
+    mockservice = TestBed.get(MockPostService);              
   }));
 
   beforeEach(() => {
@@ -73,9 +90,9 @@ describe('AddUserComponent', () => {
     expect(component.user_item.Employee_Id).toBeNull;
   }); 
 
-  it('get user', () => {    
+  it('get user', () => {       
     component.get();
-    expect(userService.get).toHaveBeenCalledWith();
+    expect(component.user_item).toBeDefined;
   });   
 
   it('test ngonit', () => {    
@@ -89,25 +106,36 @@ describe('AddUserComponent', () => {
     expect(component.setVisibility()).toEqual(false);
   });  
 
-  it('add user', () => {
-    //component.adduser();    
-  });  
-
-  it('update user', () => {
-    
-  });  
-
-  it('delete user', () => {
-    
-  });  
-
-  it('get user by id', () => {
-    
+  /* it('add user', () => {    
+    component.user_item = new User();       
+    component.adduser();  
+    expect(component.user_item).toBeDefined;
   }); 
+  
+  it('submit user', () => {    
+    component.user_item = new User();       
+    component.submituser();  
+    expect(component.user_item).toBeDefined;
+  });
 
-  it('submit user', () => {
-    
-  }); 
+  it('update user', () => {        
+    component.user_item = new User();       
+    component.updateuser();  
+    expect(component.user_item).toBeDefined;
+  });  
+
+  it('delete user', () => {        
+    component.user_item = new User();       
+    component.deleteuser(1);  
+    expect(component.user_item).toBeDefined;
+  });  
+
+  it('get user', () => {        
+    component.user_item = new User();       
+    component.getuser(1);  
+    expect(component.user_item).toBeDefined;
+  });  */ 
+     
 
   it('sort user F', () => {
     component.sort('F');
